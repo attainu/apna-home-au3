@@ -1,0 +1,143 @@
+CREATE TABLE USERDETAILS(
+id serial PRIMARY KEY,
+firstName VARCHAR (50) NOT NULL,
+lastName VARCHAR (50),
+email VARCHAR (50) UNIQUE KEY,
+phoneNo  CHAR(10),
+password VARCHAR(50),
+imageUrl VARCHAR(200),
+streetNo  VARCHAR(50),
+state    VARCHAR(50),
+zipcode  VARCHAR(20),
+cart     text[],
+orderHistory text[]);
+
+ CREATE TABLE OREDERDETAILS(
+ orderId serial PRIMARY KEY,
+ itemId VARCHAR(20),
+ userId integer REFERENCES USERDETAILS(id),
+ orderDate date NOT NULL default CURRENT_DATE,
+ deliveryDate date NOT NULL ,
+ streetNo VARCHAR(50),
+ state VARCHAR(50),
+ zipcode VARCHAR(20),
+ phoneNo CHAR(10),
+ quantity INTEGER,
+ status text);
+
+
+CREATE TABLE ITEMDETAILS(
+itemId serial PRIMARY KEY,
+itemName VARCHAR(200) NOT NULL,
+prize INTEGER NOT NULL,
+itemQuantity INTEGER NOT NULL,
+vendorId INTEGER,
+expectedDelivery INTEGER,
+returnPolicy VARCHAR(30),
+discount SMALLINT,
+description text NOT NULL,
+detailsAndFeatures text,
+images text[],
+itemCoverImage text,
+categoryId INTEGER,
+filterTags text[],
+weight NUMERIC (5,3),
+brand VARCHAR(40),
+approved BOOLEAN);
+
+
+
+ CREATE TABLE CATEGORY(
+ categoryId serial PRIMARY KEY,
+ categoryDetail text NOT NULL,
+ categoryName VARCHAR(40) NOT NULL);
+
+
+CREATE TABLE REVIEW (
+itemId INTEGER REFERENCES ITEMDETAILS(itemId),
+ratings NUMERIC (1,1) NOT NULL,
+comment TEXT,
+userId INTEGER[] , 
+date date  NOT NULL default CURRENT_DATE                        
+);
+
+create table vender(
+vendorId serial PRIMARY KEY ,
+firstName varchar(50) NOT NULL,
+lastName varchar(50),
+email varchar(255) UNIQUE NOT NULL,
+phoneNo char(10) NOT NULL,
+streetNo varchar(255) NOT NULL,
+state  varchar(255) NOT NULL,
+zipcode varchar(50) NOT NULL,
+country varchar(100) NOT NULL,
+companyName varchar(255) NOT NULL,
+compStreetNo varchar(255) NOT NULL,
+compState  varchar(255) NOT NULL,
+compZip varchar(255) NOT NULL,
+compCountry varchar(100) NOT NULL,
+password varchar(255) NOT NULL,
+userImage varchar(255),
+compImage varchar(255),
+compDesc text,
+compDocs text[]);
+
+
+create table itemDetails(
+    itemId serial PRIMARY KEY,
+    itemName varchar(255) NOT NULL,
+    itemPrize NUMERIC(10,2) NOT NULL,
+    iteqQuantity INTEGER NOT NULL DEFAULT 1,
+    vendorId INTEGER REFERENCES vendor(vendorId),
+    exptDayOfDelivery INTEGER NOT NULL,
+    returnPolicy varchar(255) NOT NULL,
+    discount NUMERIC(3,2) NOT NULL,
+    description text,
+    detailsAndFeatures text,
+    itemImages text[],
+    itemCoverImage  varchar(255),
+    categoryName varchar(255) NOT NULL,
+    weight NUMERIC(10,3),
+    brand varchar(255) NOT NULL,
+    tags text[],
+    createdAt date NOT NULL DEFAULT CURRENT_DATE,
+    upDatedAt date NOT NULL DEFAULT CURRENT_DATE
+);
+
+
+create table review(
+    itemId INTEGER REFERENCES itedDetails(itemId),
+    ratings NUMERIC(1,1),
+    comment text,
+    userId INTEGER[],
+    date date NOT NULL DEFAULT CURRENT_DATE,
+    upVotes INTEGER,
+    downVotes INTEGER
+);
+
+create table dealsOfTheDay(
+    itemId INTEGER REFERENCES itemDetails(itemId),
+    discount NUMERIC(2,2) NOT NULL,
+    startAt date NOT NULL DEFAULT CURRENT_DATE,
+    endIn date NOT NULL DEFAULT CURRENT_DATE
+)
+
+create Table replace(
+    orderId integer REFERENCES orderDetails(orderId),
+    replaceDate date DEFAULT CURRENT_DATE,
+    reasonForReplace text NOT NULL,
+);
+
+create table packages(
+    packageId serial PRIMARY KEY,
+    itemId text[],
+    discount NUMERIC(2,2),
+
+)
+
+
+
+
+
+
+
