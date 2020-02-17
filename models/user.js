@@ -1,0 +1,1 @@
+const signUpQuery='INSERT INTO USERDETAILS '
