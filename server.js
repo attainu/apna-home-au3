@@ -2,7 +2,8 @@ const express = require('express');
 const connect= require('./connection/connection');
 const auth =require('./middleware/auth');
 const userRoute=require('./user/user-auth');
-
+const items=require('./user/items');
+const orders=require('./user/order');
 
 const app = express();
 
@@ -16,8 +17,12 @@ app.use(express.static(__dirname + '/' + 'public'));
 //@public route
 app.use("/user", userRoute);
 
-//@user signup route
+//@get route for items
+app.use("/api/v1", items);
 
 
+//@Route for orders
+app.use("/order/api/v1", orders);
 
-app.listen(8080,()=> console.log("app is started"));
+
+app.listen(7000,()=> console.log("app is started"));

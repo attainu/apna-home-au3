@@ -24,6 +24,33 @@ const signIn=async(req,db)=>{
 }
 
 
+const getItems=async(req,db)=>{
+
+
+    req.query.itemsPerPage = req.query.itemsPerPage ? req.query.itemsPerPage : 10;
+    req.query.pageNo       = req.query.pageNo ? req.query.pageNo : 1;
+
+    const offset = Number(req.query.pageNo -1) * Number(req.query.itemsPerPage);
+    const count = Number(req.query.itemsPerPage);
+
+    const query = {
+        text: 'Select * from itemdetails limit $1 offset $2',
+        values: [count,offset]
+    } 
+    
+    try{
+
+     const result=await  db.query(query);
+      return result;
+
+    } catch(error){
+          
+        console.log(error);
+    }
+
+}
+
 module.exports={
-    signIn
+    signIn,
+    getItems
 }

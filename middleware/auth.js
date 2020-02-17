@@ -25,7 +25,7 @@ jwt.verify(token,config.get('jwtSecret'),options,(error,result)=>{
         return;
     }
     else{
-       console.log(result);
+       console.log(result,">>>>>");
        req.user=result;
        next();
     }

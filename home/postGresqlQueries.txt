@@ -12,18 +12,34 @@ zipcode  VARCHAR(20),
 cart     text[],
 orderHistory text[]);
 
- CREATE TABLE OREDERDETAILS(
- orderId serial PRIMARY KEY,
- itemId VARCHAR(20),
- userId integer REFERENCES USERDETAILS(id),
- orderDate date NOT NULL default CURRENT_DATE,
- deliveryDate date NOT NULL ,
- streetNo VARCHAR(50),
- state VARCHAR(50),
- zipcode VARCHAR(20),
- phoneNo CHAR(10),
- quantity INTEGER,
- status text);
+CREATE TABLE ORDERDETAILS
+(
+orderId serial PRIMARY KEY,
+itemId INTEGER REFRENCES itemdetails(itemId),
+itemName VARCHAR(200) NOT NULL,
+prize INTEGER NOT NULL,
+itemQuantity INTEGER NOT NULL,
+vendorId INTEGER,
+expectedDelivery INTEGER,
+returnPolicy VARCHAR(30),
+discount decimal(4,2),
+description text NOT NULL,
+detailsAndFeatures text,
+images text[],
+itemCoverImage text,
+categoryName varchar(255),
+weight NUMERIC (5,3),
+brand VARCHAR(40),
+userId integer REFERENCES USERDETAILS(id) ,
+orderDate date NOT NULL default CURRENT_DATE,
+deliveryDate date NOT NULL ,
+streetNo VARCHAR(255) NOT NULL,
+state VARCHAR(255) NOT NULL,
+zipcode VARCHAR(255) NOT NULL,
+phoneNo CHAR(10) NOT NULL,
+country varchar(255) NOT NULL,
+status text
+);
 
 
 CREATE TABLE ITEMDETAILS(
@@ -123,7 +139,7 @@ create table dealsOfTheDay(
 )
 
 create Table replace(
-    orderId integer REFERENCES orderDetails(orderId),
+    orderId integer REFERENCES orderDetails(orderId) ON CASCADE DELETE,
     replaceDate date DEFAULT CURRENT_DATE,
     reasonForReplace text NOT NULL,
 );
