@@ -2,17 +2,19 @@ import React, { Component } from 'react';
 import {Input} from '../Input/Input';
 import 'antd/dist/antd.css';
 import { Button } from 'antd';
-import  axios from '../../axios/axios';
+import  axios from 'axios';
+import {connect} from 'react-redux';
+import {login} from '../../redux/actions/authActions';
 
-export default class Login extends Component {
+ class Login extends Component {
 
     state={
       "email":'',
       "password":'',
       "loading" :false,
       'emailError':false,
-       'passError':false,
-       'disable':false
+      'passError':false,
+      'disable':false
     }
 
     inputChangeHandler=async (e)=>{
@@ -35,10 +37,6 @@ export default class Login extends Component {
                    disable: !e.target.value.length > 0
                  });
                }
-
-             
-        
-
     }
 
     submitHandler= async (e)=>{
@@ -59,11 +57,20 @@ export default class Login extends Component {
          };
 
          if(!emailError && !passError){
-           const result = await axios.post(
-             "signin",
-             data
-           );
-           console.log(result);
+           axios
+             .post("http://localhost:8080/user/signin", data)
+             .then(res =>{
+               console.log(res, ">>>");
+               this.setState({
+                 ...this.state,
+                 loading:false
+               })
+               this.props.login();
+               if(res.data && res.data.token)
+               localStorage.setItem('token',res.data.token);
+            } 
+             ).catch(error=>console.log(error));
+          //  console.log(result);
           }
 
     }
@@ -131,3 +138,7 @@ export default class Login extends Component {
         );
     }
 }
+
+
+
+export default connect(null,login)(Login);
