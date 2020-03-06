@@ -4,7 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server":"nodemon server.js",
+    "client": "npm start --prefix ../apna-ghar-frontend/apna-ghar",
+    "dev":"concurrently \"npm run server\" \"npm run client\" "
   },
   "keywords": [],
   "author": "",
@@ -12,6 +15,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.19.0",
+    "concurrently": "^5.1.0",
     "config": "^3.2.5",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",

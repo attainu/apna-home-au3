@@ -2,11 +2,11 @@ const bcrypt=require('bcryptjs');
 
 
 const signIn=async(req,db)=>{
-
+    console.log(req.body, ">>>");
     let {email,password}=req.body;
     const salt = await bcrypt.genSalt(10);
     
-    console.log(password);
+    console.log(password,">>>>>>");
     const query={
        text: 'Select * from userdetails where email=$1',
        values:[email]
@@ -14,7 +14,9 @@ const signIn=async(req,db)=>{
 
     try{
     const result =await db.query(query)
-        //console.log(result);
+       
+        if(!result.rows.length)
+          return null;
         if (await bcrypt.compare(password,result.rows[0].password))
               return result;
 

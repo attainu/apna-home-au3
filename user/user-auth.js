@@ -18,9 +18,9 @@ app.use(express.static(__dirname + "/" + "public"));
 router.post("/signin",async (req, res) => {
   
   try{
-
+    
     const user= await userQueries.signIn(req,client);
-   console.log(user);
+   console.log(user,">>>>");
      
     if(user && user.rows.length>0){
       delete user.rows[0].password;

@@ -12,9 +12,22 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(__dirname + '/' + 'public'));
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
 
 //@user signin route
+app.get("/",(req,res)=>{
+    console.log("helloooo");
+    res.json("Hello");
+})
 //@public route
+
 app.use("/user", userRoute);
 
 //@get route for items
@@ -25,4 +38,4 @@ app.use("/api/v1", items);
 app.use("/order/api/v1", orders);
 
 
-app.listen(7000,()=> console.log("app is started"));
+app.listen(8080,()=> console.log("app is started"));
